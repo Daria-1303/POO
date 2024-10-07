@@ -1,5 +1,8 @@
 class Ceas{
+
+    private static int nrCeasuri;
     private int ora, minut, secunda;
+
 
 
     /*
@@ -35,13 +38,18 @@ class Ceas{
     //e acelasi lucru ca setarele de sus
 
     */
+    public static int getNumarCeasuri(){
+        return nrCeasuri;
+    }
 
     //mai merge si asa
     public Ceas(int ora, int minut, int secunda){
         //this se refera la clasa, la obiectul actual, da valoarea campului nostru
+        nrCeasuri++;
         this.ora = ora;
         this.minut = minut;
         this.secunda = secunda;
+
     }
 
     public void afiseaza(){
