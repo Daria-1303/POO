@@ -8,7 +8,7 @@ class Client{
         tir1.adaugaRemorca(20, "TM02XYZ");
 
         Remorca rem3 = new Remorca("TM03XYZ");
-        //tir1.adaugaRemorca(rem3);
+        tir1.adaugaRemorca(rem3);
 
         System.out.println("Tir 1 after adding trailers:");
         System.out.println(tir1);
@@ -19,7 +19,7 @@ class Client{
         System.out.println("Tir 2 after adding trailers:");
         System.out.println(tir2);
 
-        System.out.println("Are the two TIRs equal? " + tir1.isEqual(tir2));
+        System.out.println("Are the two TIRs equal? " + tir1.equals(tir2));
 
         Remorca removedRemorca = tir1.stergeRemorca("TM01XYZ");
         if (removedRemorca != null) {

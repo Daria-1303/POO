@@ -43,8 +43,13 @@ class Tir{
         return null;
     }
 
-    public boolean isEqual(Tir otherTir) {
-        return this.getTotalNrCutii() == otherTir.getTotalNrCutii();
+    public boolean equals(Object obj) {
+        //return this.getTotalNrCutii() == otherTir.getTotalNrCutii();
+        if(obj instanceof Tir){
+            Tir otherTir = (Tir) obj;
+            return this.getTotalNrCutii() == otherTir.getTotalNrCutii();
+        }
+        return false;
     }
 
     private int getTotalNrCutii() {
