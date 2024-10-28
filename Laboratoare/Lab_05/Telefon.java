@@ -1,6 +1,6 @@
 class Telefon{
     private String numeProprietar;
-    private String [] apelanti = new String[100];
+    private String [] apelatori = new String[100];
     private int contorApeluri;
 
 
@@ -9,9 +9,21 @@ class Telefon{
         this.contorApeluri = 0;
     }
 
-    public boolean apeleaza(Telefon apelator){
+    /*
+    public boolean apeleaza1(Telefon apelator){
         if(this.contorApeluri < 100){
-            apelanti[contorApeluri++] = apelator.numeProprietar;
+            apelatori[contorApeluri++] = apelator.numeProprietar;
+            return true;
+        }
+
+        return false;
+    }
+    */
+
+
+    public boolean apeleaza(Telefon telefonApelat){
+        if(this.contorApeluri < 100){
+            telefonApelat.apelatori[telefonApelat.contorApeluri++] = this.numeProprietar;
             return true;
         }
 
@@ -22,7 +34,7 @@ class Telefon{
         Integer nrApeluri = 0;
 
         for(int i = 0; i < contorApeluri; i++){
-            if(apelanti[i].equals(numeProprietarTelefon)){
+            if(apelatori[i].equals(numeProprietarTelefon)){
                 nrApeluri++;
             }
         }
@@ -34,7 +46,7 @@ class Telefon{
         String output = "Nume proprietar : " + numeProprietar + "\n Apelanti : ";
 
         for(int i = 0; i < this.contorApeluri; i++){
-            output += apelanti[i] + " ";
+            output += apelatori[i] + " ";
         }
 
         return output;
