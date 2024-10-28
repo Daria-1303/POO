@@ -1,4 +1,5 @@
 import java.io.*;
+
 class Interval {
     private int low, high;
     private int testedCount, containedCount;
