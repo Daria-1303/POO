@@ -24,8 +24,13 @@ public class Main {
 
         // Random
         for (int i = 0; i < numarApeluri; i++) {
-            int x = random.nextInt(numarTelefoane);
-            int y = random.nextInt(numarTelefoane);
+            int x, y;
+
+            do{
+                x = random.nextInt(numarTelefoane);
+                y = random.nextInt(numarTelefoane);
+            }while(x == y);
+
 
             boolean apelSucces = telefoane[x].apeleaza(telefoane[y]);
             if (!apelSucces) {

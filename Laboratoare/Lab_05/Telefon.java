@@ -44,6 +44,7 @@ class Telefon{
 
     public String toString(){
         String output = "Nume proprietar : " + numeProprietar + "\n Apelanti : ";
+        //String temp[] = new String[100];
 
         for(int i = 0; i < this.contorApeluri; i++){
             output += apelatori[i] + " ";
