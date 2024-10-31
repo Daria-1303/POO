@@ -32,11 +32,13 @@ class Student{
             
             return this.getNumarMatricol() == otherStudent.getNumarMatricol();
         }
+        
+        return false;
     }
 
 
     public String toString(){  
-        return "Nume: " + nume + ", Numar Matricol : " + numarMatricol + ", Medie generala: " + medieGenerala;
+        return "Nume: " + numeStudent + ", Numar Matricol : " + numarMatricol + ", Medie generala: " + medieGenerala;
     }
 
 
