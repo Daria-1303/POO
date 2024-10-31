@@ -46,9 +46,13 @@ class Telefon{
         String output = "Nume proprietar : " + numeProprietar + "\n Apelanti : ";
         String temp[] = new String[100];
 
+        //asta afiseaza toti apelatorii
         for(int i = 0; i < this.contorApeluri; i++){
             output += apelatori[i] + " ";
         }
+
+
+        //for(int i = 0;  )
 
         return output;
     }
