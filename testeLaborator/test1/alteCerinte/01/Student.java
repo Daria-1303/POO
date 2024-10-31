@@ -24,6 +24,16 @@ class Student{
         return medieGenerala;
     }
 
+    //equals
+
+    public boolean equals(Object obj){
+        if(obj instanceof Student){
+            Student otherStudent = (Student) obj;
+            
+            return this.getNumarMatricol() == otherStudent.getNumarMatricol();
+        }
+    }
+
 
 
 
