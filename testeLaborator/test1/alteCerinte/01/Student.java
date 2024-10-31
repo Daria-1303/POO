@@ -35,7 +35,9 @@ class Student{
     }
 
 
-
+    public String toString(){  
+        return "Nume: " + nume + ", Numar Matricol : " + numarMatricol + ", Medie generala: " + medieGenerala;
+    }
 
 
 }
