@@ -32,4 +32,8 @@ class ContBancar{
 
         return false;
     }
+
+    public String toString(){
+        return "Numar cont: " + numarUnic + ", Titular: " + numeTitular + ", Sold: " + soldCurent;
+    }
 }

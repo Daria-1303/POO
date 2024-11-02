@@ -22,4 +22,12 @@ class Banca{
 
         return false;
     }
+
+    public String toString(){
+        String rezultat = "Conturile din banca : \n";
+
+        for(int i = 0; i < numarConturi; i++){
+            rezultat +=
+        }
+    }
 }
