@@ -33,4 +33,24 @@ class BibliotecaArticole{
 
         return rezultat;
     }
+
+    public String articoleDupaAn(int an) {
+        String rezultat = "Articole publicate in anul " + an + ":\n";
+        for (int i = 0; i < numarArticole; i++) {
+            if (articole[i].getAnPublicare() == an) {
+                rezultat += articole[i].toString() + "\n";
+            }
+        }
+        return rezultat;
+    }
+
+    public String articoleAutor(String autor) {
+        String rezultat = "Articole scrise de " + autor + ":\n";
+        for (int i = 0; i < numarArticole; i++) {
+            if (articole[i].getNumeAutor().equals(autor)) {
+                rezultat += articole[i].toString() + "\n";
+            }
+        }
+        return rezultat;
+    }
 }

@@ -26,6 +26,9 @@ class Client{
         biblioteca.adaugaArticol(articol2);
         biblioteca.adaugaArticol(articol3);
 
-        System.out.print(biblioteca.afiseazaArticole());
+        System.out.println("Toate articolele:\n" + biblioteca.afiseazaArticole());
+
+        System.out.println(biblioteca.articoleDupaAn(2020));
+        System.out.println(biblioteca.articoleAutor("Daria"));
     }
 }
