@@ -21,7 +21,7 @@ class Jucator{
     public boolean equals(Object obj){
         if(obj instanceof Jucator){
             Jucator otherJucator = (Jucator) obj;
-            return (this.getNumeJucator() == otherJucator.getNumeJucator()) && (this.getNumarJucator() == otherJucator.getNumarJucator());
+            return (this.getNumeJucator().equals(otherJucator.getNumeJucator())) && (this.getNumarJucator() == otherJucator.getNumarJucator());
         }
 
         return false;
