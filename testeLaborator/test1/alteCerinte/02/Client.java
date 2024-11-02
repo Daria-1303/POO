@@ -18,3 +18,24 @@ conturiSubSoldMinim(double soldMinim): returnează o listă cu toate conturile c
 
 mic decât valoarea specificată.
  */
+
+class Client{
+    public static void main(String []args){
+        Banca banca = new Banca();
+
+        ContBancar cont1 = new ContBancar(101, "Alice", 500.0);
+        ContBancar cont2 = new ContBancar(102, "Bob", 1500.0);
+        ContBancar cont3 = new ContBancar(103, "Charlie", 200.0);
+
+        banca.adaugaCont(cont1);
+        banca.adaugaCont(cont2);
+        banca.adaugaCont(cont3);
+
+        System.out.println(banca.toString());
+
+        System.out.println("Sold total al conturilor: " + banca.soldTotal());
+
+        String conturiSubMinim = banca.conturiSubSoldMinim(1000.0);
+        System.out.println(conturiSubMinim);
+    }
+}
