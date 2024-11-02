@@ -13,5 +13,19 @@ class Card{
 
             return this.numarCard.equals(otherCard.numarCard);
         }
+
+        return false;
+    }
+
+    public String toString(){
+        return numarCard + " - " +soldCard;
+    }
+
+    public double getSoldCard(){
+        return soldCard;
+    }
+
+    public String getNumarCard(){
+        return numarCard;
     }
 }
