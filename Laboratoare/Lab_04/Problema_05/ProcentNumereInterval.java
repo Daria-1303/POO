@@ -1,6 +1,6 @@
 import java.io.*;
 
-public class Client {
+class Client {
     public static void main(String[] args) {
         Interval[] intervals = new Interval[100]; // presupunem maxim 100 de intervale
         int intervalCount = 0;
