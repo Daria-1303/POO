@@ -8,10 +8,15 @@ abstract class Car {
     public void opreste(){
         
     }
-
+    //daca avem abstract la o metoda -> vom avea si clasa abstracta
+    /* 
     public void alimenteaza(){
         System.out.println("Se alimenteaza...");
     }
+    */
+
+    public abstract void alimenteaza();
+    //prima clasa neabstracta trebuie sa implementeze toate metodele si sa le suprascrie
 }
 
 class MasinaDiesel extends Car{
@@ -25,3 +30,9 @@ class MasinaElectrica extends Car{
         System.out.println("Se incarca...");
     }
 }
+
+/*
+    Interfata se foloseste daca vrei sa iei functionalitati 
+    Poti sa ai mai multe interfete 
+    Poti extinde doar o clasa abstracta
+ */
