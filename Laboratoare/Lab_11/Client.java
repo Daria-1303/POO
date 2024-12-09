@@ -86,6 +86,7 @@ class Client2{
 
 
         // putem sa aplicam metoda hashcode -> ca sa putem sa facem comparatii intre obiecte
+        // linked list -> e mai bun pentru adaugare si stergere
 
     }
 }

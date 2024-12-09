@@ -46,6 +46,109 @@ Tip ce va avea cel put¸in un element de tip Colectie, dupa care aceasta se va a
 Se va testa ¸si egalitatea elementelor dintre dou˘a colect¸ii.
 
  */
-public class Client {
-    
+
+import java.util.ArrayList;
+
+abstract class Tip{
+    public abstract String getTip();
+    public abstract String toString();
+}
+
+class Intreg extends Tip{
+    private int x;
+
+    public Intreg(int x){
+        this.x = x;
+    }
+
+    public String getTip(){
+        return "Intreg";
+    }
+
+    public String toString(){
+        return "" + x;
+    }
+}
+
+class Sir extends Tip{
+    private String s;
+
+    public Sir(String s){
+        this.s = s;
+    }
+
+    public String getTip(){
+        return "Sir";
+    }
+
+    public String toString(){
+        return s;
+    }   
+}
+
+class Colectie{
+    ArrayList<Tip> colectie = new ArrayList<Tip>();
+
+    public String getTip(){
+        return "Colectie";
+    }
+
+    public String toString(){
+        String result = "(";
+        for(Tip t : colectie){
+            result += t.toString() + ", ";
+        }
+        result = result.substring(0, result.length() - 2);
+        result += ")";
+        return result;
+    }
+
+    public boolean equals(Colectie c){
+        if(this.colectie.size() != c.colectie.size()){
+            return false;
+        }
+        for(int i = 0; i < this.colectie.size(); i++){
+            if(!this.colectie.get(i).toString().equals(c.colectie.get(i).toString())){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void add(Tip t){
+        colectie.add(t);
+    }
+
+    public void remove(Tip t){
+        colectie.remove(t);
+    }
+
+    public Tip get(int i){
+        return colectie.get(i);
+    }
+
+    public int size(){
+        return colectie.size();
+    }
+
+}
+
+class Client {
+    public static void main(String[] args) {
+        Colectie c = new Colectie();
+        c.add(new Intreg(7));
+        c.add(new Intreg(4));
+        c.add(new Sir("Eu"));
+        c.add(new Intreg(12));
+        System.out.println(c.toString());
+
+        Colectie c2 = new Colectie();
+        c2.add(new Intreg(7));
+        c2.add(new Intreg(4));
+        c2.add(new Sir("Eu"));
+        c2.add(new Intreg(12));
+        System.out.println(c2.toString());
+
+        System.out.println(c.equals(c2));
+    }
 }
