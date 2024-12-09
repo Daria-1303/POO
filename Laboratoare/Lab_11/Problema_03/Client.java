@@ -87,7 +87,7 @@ class Sir extends Tip{
 }
 
 class Colectie extends Tip {
-    ArrayList<Tip> colectie = new ArrayList<>();
+    private ArrayList<Tip> colectie = new ArrayList<>();
 
     public String getTip() {
         return "Colectie";
@@ -96,13 +96,17 @@ class Colectie extends Tip {
     public Colectie() {
     }
 
+    public ArrayList<Tip> getList(){
+        return this.colectie;
+    }
+
     public String toString() {
         StringBuilder result = new StringBuilder("(");
         for (Tip t : colectie) {
             result.append(t.toString()).append(", ");
         }
         if (colectie.size() > 0) {
-            result.setLength(result.length() - 2); // Elimină ultima virgulă și spațiu
+            result.setLength(result.length() - 2); 
         }
         result.append(")");
         return result.toString();
@@ -152,7 +156,7 @@ class Client {
         c2.add(new Sir("Eu"));
         c2.add(new Intreg(12));
 
-        // Adaugă o colectie în colectie
+        // colectia 3 va fi adaugata in c2
         Colectie c3 = new Colectie();
         c3.add(new Intreg(2));
         c3.add(new Intreg(8));
