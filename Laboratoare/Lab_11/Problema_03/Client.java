@@ -86,51 +86,55 @@ class Sir extends Tip{
     }   
 }
 
-class Colectie{
-    ArrayList<Tip> colectie = new ArrayList<Tip>();
+class Colectie extends Tip {
+    ArrayList<Tip> colectie = new ArrayList<>();
 
-    public String getTip(){
+    public String getTip() {
         return "Colectie";
     }
 
-    public String toString(){
-        String result = "(";
-        for(Tip t : colectie){
-            result += t.toString() + ", ";
-        }
-        result = result.substring(0, result.length() - 2);
-        result += ")";
-        return result;
+    public Colectie() {
     }
 
-    public boolean equals(Colectie c){
-        if(this.colectie.size() != c.colectie.size()){
+    public String toString() {
+        StringBuilder result = new StringBuilder("(");
+        for (Tip t : colectie) {
+            result.append(t.toString()).append(", ");
+        }
+        if (colectie.size() > 0) {
+            result.setLength(result.length() - 2); // Elimină ultima virgulă și spațiu
+        }
+        result.append(")");
+        return result.toString();
+    }
+
+    public boolean equals(Colectie c) {
+        if (this.colectie.size() != c.colectie.size()) {
             return false;
         }
-        for(int i = 0; i < this.colectie.size(); i++){
-            if(!this.colectie.get(i).toString().equals(c.colectie.get(i).toString())){
+        for (int i = 0; i < this.colectie.size(); i++) {
+            if (!this.colectie.get(i).toString().equals(c.colectie.get(i).toString())) {
                 return false;
             }
         }
         return true;
     }
 
-    public void add(Tip t){
+    public void add(Tip t) {
         colectie.add(t);
     }
 
-    public void remove(Tip t){
+    public void remove(Tip t) {
         colectie.remove(t);
     }
 
-    public Tip get(int i){
+    public Tip get(int i) {
         return colectie.get(i);
     }
 
-    public int size(){
+    public int size() {
         return colectie.size();
     }
-
 }
 
 class Client {
@@ -147,8 +151,14 @@ class Client {
         c2.add(new Intreg(4));
         c2.add(new Sir("Eu"));
         c2.add(new Intreg(12));
-        System.out.println(c2.toString());
 
+        // Adaugă o colectie în colectie
+        Colectie c3 = new Colectie();
+        c3.add(new Intreg(2));
+        c3.add(new Intreg(8));
+        c2.add(c3);
+
+        System.out.println(c2.toString());
         System.out.println(c.equals(c2));
     }
 }
