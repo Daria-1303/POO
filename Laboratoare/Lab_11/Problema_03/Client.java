@@ -48,6 +48,7 @@ Se va testa ¸si egalitatea elementelor dintre dou˘a colect¸ii.
  */
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 abstract class Tip{
     public abstract String getTip();
@@ -112,6 +113,7 @@ class Colectie extends Tip {
         return result.toString();
     }
 
+    /* 
     public boolean equals(Colectie c) {
         if (this.colectie.size() != c.colectie.size()) {
             return false;
@@ -123,6 +125,24 @@ class Colectie extends Tip {
         }
         return true;
     }
+        */
+
+    // equals cu iterator
+
+    public boolean equals(Colectie c) {
+        if (this.colectie.size() != c.colectie.size()) {
+            return false;
+        }
+        Iterator<Tip> it1 = this.colectie.iterator();
+        Iterator<Tip> it2 = c.colectie.iterator();
+        while (it1.hasNext()) {
+            if (!it1.next().toString().equals(it2.next().toString())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     public void add(Tip t) {
         colectie.add(t);
