@@ -1,5 +1,5 @@
 //folosim mai mult interfetele decat clasele abstracte
-interface Watch {
+interface Watch -> Timeable {
     final int CURRENT_YEAR = 2024;
     void showTime();
     void startTimer();
@@ -11,6 +11,11 @@ interface Watch {
         putem defini constante cu final
         nu putem avea campuri private, caci interfetele nu pot fi instantiate
     */
+}
+
+// putem avea interfete care se extind una pe alta
+interface Test extends Timeable{
+
 }
 
 abstract class Watch2 {

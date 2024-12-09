@@ -5,7 +5,7 @@ class Project{
     protected String objective;
     protected long funds;
 
-    protected Member manager;
+    private Member manager;
     protected Member [] members;
     protected int memberCount;
 
