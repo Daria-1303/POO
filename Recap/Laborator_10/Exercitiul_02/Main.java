@@ -22,6 +22,7 @@ class E2 extends E1 {
 }
 
 // asta ar bubui la runtime, dar ar fi compilat cu succes
+// bine asta este exceptie neverificata, deci nu ar fi corect pentru enunt
 class E3 extends RuntimeException{
     public E3() {
         super("E3");
