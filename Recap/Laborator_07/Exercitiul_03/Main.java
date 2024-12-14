@@ -6,6 +6,7 @@ class NumarComplex{
         this.re = re;
         this.im = im;
     }
+
     public double modul() {
         return Math.sqrt( re * re + im * im );
     }
@@ -25,6 +26,7 @@ class NumarReal extends NumarComplex {
 
         super(re,0);
     }
+    
     public boolean maiMare(NumarReal a) {
         return re > a.re;
     }
