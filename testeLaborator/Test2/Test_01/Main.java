@@ -28,7 +28,7 @@ class Utilizator extends Destinatar{
     }
 
     public void trimite(Destinatar destinatar, String mesaj){
-        this.receptioneaza(this, "Trimis catre " + destinatar.nume + "   mesajul: " + mesaj + "\n");
+        jurnal += "Trimis catre " + destinatar.nume + "   mesajul: " + mesaj + "\n";
         destinatar.receptioneaza(this, mesaj);
     }
 
@@ -80,6 +80,12 @@ class Grup extends Destinatar{
 
         return rezultat;
     }
+    
+    /*
+     * public String toString(){
+     *    return nume + ":\n" + destinatari.toString();
+     * }
+     */
 
     public boolean equals(Object o){
         if(o instanceof Grup){
@@ -119,12 +125,11 @@ class Main{
         }
 
         // trimitere mesaje
-        utilizator1.trimite(grup1, "Salutare");
-        utilizator2.trimite(grup1, "Salut");
-        utilizator3.trimite(grup1, "Buna");
+        utilizator3.trimite(grup1, "Am deschis magazinul");
+        utilizator2.trimite(grup1, "Vin acuma");
 
         // afisare jurnale
-        System.out.println(grup1);
+        //System.out.println(grup1);
 
         System.out.println(utilizator1);
         System.out.println(utilizator2);
