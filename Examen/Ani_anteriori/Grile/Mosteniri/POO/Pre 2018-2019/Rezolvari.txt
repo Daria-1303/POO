@@ -1,0 +1,672 @@
+R2C2 Teorie Poza 2
+
+Q1.
+
+Corect: Pentru ca nu are sens sa vrei sa schimbi modul de initializare a atributelor din superclasa (atribute private la care nu ai altcumva acces). Daca s-ar putea, in subclasa, cand as suprascrie constructorul superclasei, eu cum nu vad atributele din superclasa( ca unele sunt private) unele ar putea ramane neinitiaalizate sau initializate prost. 
+Corect.Pentru ca metoda statica se apeleaza via numele clasei, nu pe un obiect. (“Obiect curent” se refera la obiectul din fata apelului).
+
+Q2.
+
+ 36. Desene
+Inainte de call: p si s refera catre obiectul cu starea 12 11
+In call: Se schimba starea obiectului p (12,11) la (36, 35) 
+La iesire din call p refera rezultatul returnului (59,83)
+S refera tot catre obiectul fost q a carei stare s-a modificat de la (12,11) la (36,35)
+s.getX() => 36
+23. Desene
+Inainte de call: q refera catre obiectul cu starea (24,23);
+In call q isi schimba obiectul spre care refera si acelui nou obiect i se modfica starea
+La iesire din call datorita transmiterii referintei prin valoare, nu s-a patrat modificare (adica q nu refera spre alt obiect asa cum a fost obligat in call), el refera tot catre ce a referit mai nainte de call() =>(24,23)
+q.getY() => 23
+
+Q3. 
+Nu. Pentru ca inca nu s-a creat obiectul. Momentan am declarat doar o referinta care nu refera spre nimic. Membrii clasei se initializeaza doar la crearea obiectului. Dar inca nu s-a creat obiect.
+Da. Nu scriu nimic in fata lui. Facand acest lucru, indic ca accesul la membru este de tip package si il pot accesa doar din interiorul pachetului.
+
+Q4. 
+Nu. Pentru ca intr-o interfata am doar constante adica atribute delcarate ca fiind static final care trebuie initializat , si doar o data. Adica singurele atribute prezente intr-o interfata sunt constante.  Daca as face acest lucru, fiecare cursant ar avea acelasi nume care a fost dat de mine la inceput cand am initializat campul.
+ Linia nu e corecta la compilare pentru ca ,compilatorul se uita daca in interfata Cursant am metoda getTip() si nu o am . O am mostenita, nu => Eroare de compilare
+
+Q5.
+
+Da. i=0 a=1, i=1 =>exec(1) arunca exceptie=> se paraseste blocul try => se intra pe ramura catch Except e => Se afiseaza Except=> se executa blocul finally a=2=> se afiseaza 2
+Incorect. Except extinde RuntimeException care este o clasa a exceptiilor neverificate, prin urmare si Except tot exceptie neverificata. Astfel nu sunt obligata sa pun clauza throws la main sau sa pun un block try catch finally pentru ca compilatorul nu verifica pentru exceptiile neveficate.
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Poza 1
+
+Q3.
+12. Desene
+X referea spre obiectul cu starea (12,13) inainte de apel, in apel x este facut sa refere spre alt obiect caruia ii schimba starea, dar datorita transmiterii referintei prin valoare,nu se pastreaza modificarea (adica nu pot schimba obiectul spre care refera o referinta intr-o metoda , iar schimbarea sa fie vizibila dupa terminarea metodei) => la iesirea din apel x refera tot spre obiectul (12,13)          => x.getP() => 12
+Pana la intrare in apel y si z refera spre obiectul care are starea (10,11) , in apel, prin e=f (adica x=y) si e.set..(adica x.set), adica prin referinta x se modifica starea obiectului referit de y si z => (14,15) => iar acest obiect se da la return => la iesire din apel y refera spre (14,15), si si z la fel => prin z.set… obiectul isi schimba starea (16,17) => y.getQ() => 17
+
+
+Q4. 
+
+
+
+import java.util.*;
+
+class ListaMea
+{
+   protected LinkedList<Double> lista=new LinkedList<Double>();
+
+   public void punePrimul(Double i)
+   {
+       lista.addFirst(i);
+   }
+
+   public void puneUltimul(Double i)
+   {
+       lista.addLast(i);
+   }
+
+   public Double iaSiEliminaPozitia(int i)
+   {
+       return lista.remove(i);
+   }
+}
+class Coada extends ListaMea
+{
+   public void introdu(Double i)
+   {
+       super.puneUltimul(i);
+   }
+
+   public Double extrage()
+   {
+      return  super.iaSiEliminaPozitia(0);
+   }
+}
+
+class Mainul
+{
+   public static void main(String[] args)
+   {
+       Coada c=new Coada();
+       c.introdu(3.4);
+       c.extrage();
+       c.punePrimul(1.2);//Nu
+       c.puneUltimul()
+       c.iaSiEliminaPozitia(1);//Nu
+
+   }
+}
+
+
+Nu e ok pentru ca daca Coada mosteneste ListaMea  atunci mosteneste atat tipul(toate metodele publice) cat si implmentarea lor. Mostenind metodele publice, insemna ca ce stie sa faca Lista Mea , aia stie sa faca sigur si Coada, adica pe langa introdu() si extrage(), coada stie si sa iaSIExtragePozitie(i), punePrimul(), puneUltipul(), lucru ce eu nu vreau. Adica imi sunt permise mai multe opeatii pe coada decat eu am zis ca accept.
+
+
+
+b) Coada implementata ok.
+
+import java.util.*;
+
+class ListaMea
+{
+   protected LinkedList<Double> lista=new LinkedList<Double>();
+
+   public void punePrimul(Double i)
+   {
+       lista.addFirst(i);
+   }
+
+   public void puneUltimul(Double i)
+   {
+       lista.addLast(i);
+   }
+
+   public Double iaSiEliminaPozitia(int i)
+   {
+       return lista.remove(i);
+   }
+}
+class Coada
+{
+   private ListaMea lista= new ListaMea();
+
+   public void introdu(Double i)
+   {
+       lista.puneUltimul(i);
+   }
+
+   public Double extrage()
+   {
+      return  lista.iaSiEliminaPozitia(0);
+   }
+}
+
+class Mainul
+{
+   public static void main(String[] args)
+   {
+       Coada c=new Coada();
+       c.introdu(3.4);
+       c.extrage();
+     
+   }
+}
+
+
+
+Poza 3.
+
+Q 5.
+
+Este corect la compilare si fara cast deoarece C mosteneste pe B , adica mosteneste atat tipul (adica toate declaratiile de metode publice) cat si implementarea metodelor de la superclasa. Adica ce stie sa faca B stie sigur sa faca si C.  De aceea este ok si fara cast.
+Fals. Se executa, Intotdeauna cand se creaza un obiect de tipul unei subclase , in tinteriorul constructorului subclasei se introduce(implicit daca exista unul no arg in superclasa ca in cazul nostru,  sau explicit daca in superclasa am doar constructori cu argumente) un apel catre constructorul superlcasei. 
+
+
+
+Q6.
+
+Fals. Din moment ce se spune ca se rezolva prin legare dinamica, insemna ca se va stii doar in momentul executiei programului, in functie de obiectul care apeleza metoda instanta suprascrisa , care implementare a metodei suprascrise se va executa. “Determina in momentul compilarii” se numeste legare statica.
+Fals. Cum ambele clase trebuie sa poata fi folosite din exteriorul pachetului, insemna ca ambele trebuie sa fie publice, dar per unitate de compilare pot avea maxim o clasa publica (iar unitatea de compilare trebuie sa aiba numele clasei publice). Solutia este sa fac doua unitati de compilare A.java si B.java in care sa scriu clasele
+
+
+
+
+Poza 4
+
+Q1.
+
+57. Am in Z metoda suprascrisa cu cea din X ? Nu. Am in superclasa lui Z metoda suprascrisa cu cea din X? Da. Legare dinamica:  Voila! => 57 
+24. Defapt Apelul lui Z() include asta: new Z() { Y(){  X() {v+=10 } v+=5 }  v+=9 } Si din interior catre exterior am v=0 , apoi v=v+10 => v= 10 =.> v=v+5 => v=15 => v=v+9 => v=24
+
+
+Q2.
+Da. Pentru ca sunt intr-o metoda statica si incerc sa accesez campul instanta al elementului curent. Cum fiecare clasa poate avea mainul ei, pot din mainul altei clase X sa scriu asta : Mainul.main(..), fara a fi creat in prealabil un obiect Main. Din faptul ca eu pot apela metoda statica inainte sa fi creat un obiect, (adica campurilor instanta nici nu li s-au alocat zone de momorie), nu are sens sa pot accesa campurile instanta ale obiectului curent(care poate nici nu exista)(plus ca metodele statice sunt facut sa le apelezi cu NumeCLasa. metStaica(), nu pe un obiect)
+Nu. Pentru ca x refera spre un obiect care poate fi de orice fel de A, doar obiectul creat poate fi doar orice fel de B (unde B subtip a lui A). Daca s-ar putea , as putea scrie x.set(e), unde e are Tipul E , subtip de-a lui A,dar care nu are nici o legatura cu B, dar obiectul meu poate tine doar B-uri , deci ar apare o eroare de executie.
+
+Q3. 
+
+19. x=0, b.make(0) da exceptie, se prinde exceptia, se executa blocul finally x=1, se repeta datorita forului, x=b.make(1) =>x=9 , se executa finally x=10, urmatoarea iteratatie, x=b.make(10) =>x=18, se executa finally x=19, se iese afara, Print 19
+Da. Pentru ca atunci cand am metode instanta overriden ,daca in superclasa meotda care urmeaza sa fie suprascrisa emite o exceptie verificata, atunci in subclasa, cand suprascriu metoda , nu pot fi mai restrctiv decat metoda pe care o mostenesc si o suprascriu (vorbind de exceptii verificate). Cum nearuncand o exceptie insemna ca nu e restrictiva, in B cand am zis ca meotda suprascrisa emite o exceptie, am zis ca metoda e mai restrictiva decat cea mostenita. Deci am eroare. Daca s-ar putea, atunci ar fi probleme la legarea dinamica, pentru ca daca prin intermediul supertipului as opera cu toate subtipurile mele, cand as apela metoda care este overriden eu as verifica doar pentru anumite exceptii , neestiind ce exceptii verificate se adauga la subtipuri, si mi-ar da eroare de compilare pentru ca nu am prins acele exceptii verificate(despre care oricum nu am cum sa stiu)
+
+Q4.
+
+Cu a.x … nu se poate. Pentru ca accesul protected este asa: Pot accesa din subclase (in orice pachet ar fi ele) membrii declarati ca fiind protected pe this. Sau din acelasi pachet pe orice referinta. Cum sunt in subclasa,in alt pachet si vreau sa acces pe referinta => Eroare de compilare.
+Da. Pentru ca regula este urmatoarea: Maxim o clasa publica per unitate de compilare, iar numele unitatii de compilare trebuie sa fie ca si numele clasei publice. Cum si A si B sunt publice, nu au cum sa fie si publice si sa fie implmentate in aceeasi unitate de compilare.
+
+Poza 5
+
+
+Q5. 
+
+-13.  x=0 , Pas Iteratie 1 => x=b.make(0) => exceptie, se executa blocul finally x=1, Pas Iteratie 2 => x=b.make(1) => x=x-4 si inca o data x=x-4 => x=1-8=-7, se executa finally x=-6, Pas iteratie 3, x=b.make(-6) ,x=x-4, x=x-4, => x=-6-8=-14, se executa finally x=-13
+Da, pentru B mosteneste pe A si in B suprascriu o metoda instanta a lui A. Vorbind de exceptii verificate, cand suprascriu o metoda a superclasei in subclasa, nu pot sa fiu mai restrictiv in ce priveste aruncarea exceptiilor verificate decat metoda mostenita din superclasa, deoarece daca as putea face asta , atunci as putea scrie avea o metoda care ometoda(A a) in care sa apelez  a.make(..) fara sa pun un block try catch  sau sa emit o exceptie (ca am zis ca meotda make din clasa A nu are exceptii), iar datorita polimorfismului as putea apela metoda cu ometoda(ceva de tipul lui B) si s-ar apela polimorfic meotda suprascrisa din clasa B si aia ar avea exceptii checked , si mi-ar da eroare de compilare pentru ca nu am tinut cont de ele, ceea ce nu e ok, ca nu mai pot trata uniform obiectele de diferite tipuri (prin mostenirea de tip) si in acelasi timp in mod particular pe fiecare (prin legare dinamica)
+
+Q6. La fel ca si Q4 anterior
+
+Poza 6 R2C2 teorie
+
+
+Q1.
+
+import java.util.*;
+
+class SMS
+{
+   public void sendSMS(String dest,String msg){}
+}
+class Fax
+{
+   public void sendFax(String dest,String msg){}
+
+}
+class Executor
+{
+
+   public void transmiteMesaj(ArrayList<String> dest,ArrayList<String> msg,ArrayList way )
+   {
+       for(int i=0;i<dest.size();i++)
+       {
+           Object w=way.get(i);
+           String d=dest.get(i);
+           String m=msg.get(i);
+
+           if(w instanceof SMS)
+           ((SMS)w).sendSMS(d,m);
+           else
+           ((Fax)w).sendFax(d,m);
+
+
+       }
+   }
+}
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+import java.util.*;
+
+abstract class Transmitere
+{
+   abstract public void send(String dest,String msg);
+}
+class SMS extends Transmitere
+{
+   public void send(String dest,String msg){}
+}
+class Fax extends Transmitere
+{
+   public void send(String dest,String msg){}
+
+}
+class Executor
+{
+
+   public void transmiteMesaj(ArrayList<String> dest,ArrayList<String> msg,ArrayList<Transmitere> way )
+   {
+       for(int i=0;i<dest.size();i++)
+       {
+           Transmitere w=way.get(i);
+           String d=dest.get(i);
+           String m=msg.get(i);
+           w.send(d,m);
+       }
+   }
+}
+
+
+
+
+Q2.
+20.
+ Inainte de apel: x si z refera spre (70,P(80,null))
+In apel: y refera catre x si  schimba starea lui x (20,P(30,null))(z refera catre acesta)
+Apelul returneza (50,P(60,null))
+La iesire din aoel x refera spre (50,P(60,null)) 
+z.getN()=>20
+80
+Inainte de apel: y refera catre (90,P(100,null))
+In apel: y schimba starea(10,P(80,null)) refera catre P(80,null) catre care refera p a lui x. Se memoreaza pentru ca in Pereche p este variabila a clasei,nu se intampla chestii doar in metoda ca in apelare
+P a lui X refera catre alt obiect acum, dar nu influenteaza cu nimic 
+=> y.getP().getN()=>80
+
+
+Q3.
+
+62. Am in X si Z metoda proc suprascrisa? NU. Are superclasa lui Z (adica Y) metoda suprascrisa din X? Da. => Print 62
+14. Apelul Z() arata asa: Z() { Y(){X(){v+=10; }v-=5;}	 v+=9;} 0. v=0; 1.v=10. 2. v=5. 3.v=14
+
+
+Q4.
+
+Da. Pentru ca dintr-o metoda statica incerc sa accesez campul instanta a obiectului curent. Asta nu e ok pentru ca metodele statice au fost gandite a fi apelate via numele clasei (nu pe un obiect) , chiar inainte de a fi creat un obiect, hence nu are sens sa accesez campurile instanta ale obiectului curent care nu mi se garanteaza ca fost creat si ca apelez metoda statica pe el(ceea ce contrazice cumva ideea de folosire a metodelor statice)
+Nu. Pentru ca x refera spre un obiect ce poate fi oricefel de A, dar obiectul creat poate tine doar B-uri.Daca s-ar putea , as putea scrie x.set(e) und e este de tipul E subtip de -a lui A (care nu are niic o legatura cu B) , dar obiectul creat nu poate tine E-uri, doar B-uri
+
+
+Poza 7.
+
+Q3.
+Da. Pentru ca se uita la tip, clasa A are metoda sum? NU. O mosteneste ? Nu => eorare de compilare
+0 . Pentru a.name() datorita legarii dinamice, o sa apeleze metoda din C , dar C are x-ul ei ,nu il mosteneste de la B => 0
+
+
+Q4.
+
+Da. a=0, Se executa prima iteratie , se arunca exceptie, se paraseste blcoul try, se afiseaza Except, se executa finally, a=1 se printeaza
+False. Cum Except extinde RuntimeException care e o clasa pentru exceptii neverificate, nu sunt obligata , ca daca o metoda arunca o exceptie, sa o prind sai sa  pun un block try catch pentru ca compilaorul nu verifica
+
+
+Poza 8.
+
+Q1.
+X instanceof X o sa fie true oricum e initializat x, dar x.getClass() ==X.class imi da true doar cand X x =new X(). Altfel e fals. x.getclass() imi da exact clasa care a fost instantiata.
+ Da. Pentru ca int este un tip primitiv. Nu mosteneste clasa Object si de accea nu poate fi parametru generic. Solutie: List<Integer>
+
+Q2. 
+
+Fals. Daca il factorizam in interfara, acolo trebuie musai sa fie static final , deci o constanta. Adica toti cursantii au acelasi nume, nume dat o singura data la inceput. Ceea ce nu e ok, ca fiecare om are alt nume
+Nu. Pentru ca se uita la tipul lui c care e Cursant. Are clasa Cursant metoda getTip()? Nu, O mosteneste? NU, ghinion , eroare de compilare.
+
+Poza 10.
+
+Q1.
+
+10.  A este init cu 0, x schimba starea=> a=8, y schimba starea=>a=10=>prin 10
+9 . x seteaza starea (a,9), in apel x este facut sa refere spre altcineva, si acelui obiect ii schimba starea, dar efectele nu raman datorita transmiterii referitnei prin valoare , x refera spre (a,9) dupa apel => 9
+13. Y seteaza stare(a,11), in apel t seteaza starea(a,13) , dupa apel y refera tot (a,13)=> Print 13
+
+
+
+Q2.
+
+Fals. Putem avea. Acelasi nume dar cu lista de parametrii(tpul lor, ordinea lor, numarul lor) diferit. Asta se numeste Overloading.
+Nu. Momentan doar am declarat o referinta de tipul tablou de Double care inca nu refera spre nimic. Nu este initalzata. Inca nu e accesibil nimic. Campul e accesibil dupa ce am creat tabloul de refinte cu new Double[nr], atunci e accesibil
+Da. Pentru ca this refera spre obiectul din fata apelului, dar in cazul metodelor statice nu are sens , pentru ca ele au fost gandite ca se apeleze via numele clasei, nu pe un obiect. De accea folosirea campurilor instanta ale obiectului curent nu are sens in metodele statice.
+
+
+Q3.
+
+Principiul open closed : clasele sa fie deschise la extensii dar inchise la modificari. Daca eu m-as hotara sa adaug clasa Letter cu metoda sendLetter(...) , atunci ar trebuie sa merg in clasa Persoana, si sa schimba else if(t instanceof SMS)... iar apoi else ((Letter)t).sendLetter(..), si daca as mai adauga alda clasa Telekinesis, iar trebui sa modific clasa Persoana
+abstract class Mod
+{
+   abstract public void send(String destinatar, String mesaj);
+}
+class SMS extends Mod{
+   public void send(String destinatar,String mesaj)
+   {
+       //In caz ca e ceva special
+   }
+}
+class FAX extends Mod
+{
+   public void send(String destinatar,String mesaj)
+   {
+       //In caz ca e ceva special
+   }
+}
+
+
+class Persoana
+{
+   public void sendMesaj(String destinatar,String mesaj,Mod t)
+  { t.send(destinatar,mesaj);}
+}
+
+
+
+
+
+
+Q4.
+
+Fals. Are doua. A ala din clasa lui si ala de la superlcasa. Nu conteaza ca se numesc la fel si ca au acelasi tip, ele sunt alocate in doua locuri diferite. Le pot accesa cu a.aField accesez aFIeld din A , si cu ((B)a).aField accesez ala din B. Nu se aplica overriding pe campuri.. Doar pe metode instanta
+Da. Am meotda x() overriden in B ? Da => 2
+Fals. Pot sa o declar abstracta. Eroare da daca incerc sa o instantiez.  Sa declari ceva de un anumit tip existent , nu da eroare de compilare. Nu stiu de ce ar da…. 
+
+
+
+Poza 11.
+
+Q5.
+
+Da, nu poate. Pentru ca desi clasa e publica si desi am importat clasa A, x nu are specificator in fata, deci are acces package, si clasa A si clasa B sunt in pachete diferite, de aia nu se poate.
+Da, nu sesizeaza. Sunt intr-o metoda statica si pe un alt obiect (nu cel curent) apelez o metoda cu castul care trebuie ca indiferent de ce tip de obiect primeste A sau B , sa faca imi compileze. Awesome!
+
+
+Q6.
+Daca RomMemory ar extinde Memory, atunci orice obiect de tipu RomMemory ar stii sa fac tot ce stie stie si un obiect Memory( obiectul RomMemory mosteneste si Interfara lui Memeory+ implelemtare). Deci pe un obiect Memory, am putea apela la orice ora,write si writeAll desi ROM este doar pentru citire.
+
+
+
+class Memory
+{
+   protected int[]content;
+
+   public void write(int addr, int value){}
+   public int read(int addr){return 1; }
+   public void writeAll(int addr, int[] value){}
+}
+
+class RomMemory extends Memory
+{
+   public RomMemory(int[] content)
+   {
+       writeAll(0,content);
+   }
+   public int readFromAddr(int addr)
+   {
+       return read(addr);
+   }
+
+   public int[] furnizeaza()
+   {
+       return content;
+   }
+}
+class Mainul
+{
+   public static void main(String[] args)
+   {
+       int[] content=new int[10];
+       RomMemory m= new RomMemory(content);
+       m.write(1,2);
+
+   }
+}
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+RomMemory ok
+
+
+class Memory
+{
+
+   public void write(int addr, int value){}
+   public int read(int addr){return 1; }
+   public void writeAll(int addr, int[] value){}
+  
+}
+
+class RomMemory
+{
+   private Memory memory;
+   private int n;
+   public RomMemory(int[] content)
+   {
+       memory.writeAll(0,content);
+       n=content.length;
+
+   }
+   public int readFromAddr(int addr)
+   {
+       return memory.read(addr);
+   }
+
+   public int[] furnizeaza()
+   { 
+       int[] continut=new int[n];
+       for(int i=0;i<n;i++)
+       continut[i]=memory.read(i);
+       return continut;
+
+   }
+}
+class Mainul
+{
+   public static void main(String[] args)
+   {
+       int[] content=new int[10];
+       RomMemory m= new RomMemory(content);
+      // m.write(1,2); Da eroare acum
+
+   }
+}
+
+
+
+
+Poza 12.
+
+Q5.
+ 
+
+Fals. Se tipareste A. Metoda nu a fost suprascris , a fost doar supraincarcata, si nu s-a aplicat legarea dinamica. 
+Fals. Nu as avea eroare. Intradevar nu as putea scrie A x=new A(). Dar , in constructorul subclasei, cand se creaza un obiect al subclasei, se apeleaza implicit (ca si in cazul nostru) sau explicit, constructorul superclasei. Deci obiectele sublcaselor sunt defapt instante a clasei A, dar nu direct. 
+
+
+
+Q6.
+
+Pentru a putea adauga elemente prima data trebuie sa cream un obiect. Daca scriem List<? Extends A> a= new ArrayList<SubtipA>(), atunci a refera spre o lista ce poate tine orice fel de A-uri , dar obiectul creat poate tine doar B-uri. Daca s-ar putea , atunci prin intermediul lui a as putea adauga in lista cu B-uri un elem C, subtip de-a lui A care nu are nici o legatura cu B-ul si as avea eroare de executie. Singura posibilitate este sa adaug null. 
+Nu. Ia valoarea true si daca o refera spre un subtip de-a lui OClasa, deoarece la creea unui obiect al sublasei se apeleaza implicit sau explicit constructorul subperclasei, deci in fond este o instanta a superlcasei.
+
+
+
+Poza 13.
+
+Q5.
+
+Da,ar compila si fara clauza throws deoarece OExceptie extinde RuntimeException care este o clasa a exceptiilor neverificate. Adica ori declare ca metoda arunca OExceptie ,ori cuprind exceptia intr-un try catch, sau nu, compilatorul nu da eroare , deoarece pentru exceptiile neverificate, compilatorul nu verifica daca am declarat ca se arunca ,sau daca am prins exceptia.
+Nu stiu ce scrie
+Da, pentru ca pe ramura a doua s-ar prinde inca o data excpetia care s-a prins pe prima ramura(prin supertip).
+
+
+Q6.
+
+Nu. Eroare de compilare. Daca scriu Cutie<X> cutieUnu=new Cutie<X>(), Y a= cutieUnu.extrage() => eroare de compilare deoarece ceea ce sigur stiu este ca extrag oricefel de X, si sa fi adaugat numai Y in cutie, nu ma impidica nimeni sa adaug candva si un E , sau un X. Am zis ca e cutie de oricefel de X => scot orice fel de X si nu am nici o garantie ca o sa scot tot tipul un Y. Este ori problema subtip=superip, ori problema tip1=tip2_diferit_de_tip1. Iar daca scriu Cutie<X>cutieUnu=new Cutie<Y>, atunci  cutieUnu refera spre un obiect ce poate fi oricefel de X, dar obiectul creat poate tin doar B-uri, si asta nu ar fi o atribuire corecta, ca daca s-ar putea , in linia urmatoare as adauga prin cutieUnu un Z in cutia care poate sa tina doar B-uri, si as ajunge la o eroare de executie.
+Nu. cutieDoi refera spre un Obiect de orice fel de X, dar obiectul creat poate tine doar Y de exemplu. Daca ar fi ok, prin intermediul lui A as putea adauga si un Z subtip de-a lui A in obiectul ce tine Y si ar apare eroare de executie. Ceea ce sigur stie sa tina este nulL
+
+
+Poza 20
+
+Q1.
+
+
+class Secventa
+{
+   private int[]all;
+   private Object sorter;
+   public Secventa(int[] nr,Object s){all=nr; sorter=s;}
+   public int getSortedNumbers()
+   {
+       if(sorter instanceof BubbleSort)
+       return ((BubbleSort)sorter).sorteazaBubble(all);
+       else if(sorter instanceof QSort)
+       return ((QSort)sorter).sorteazaQSort(all);
+       else
+       return ((MergeSort)sorter).sorteazaMergeSort(all);
+       return all;
+
+   }
+
+}
+
+class BubbleSort
+{
+   public int[] sorteazaBubble(int[] y){}
+
+}
+
+class QSort
+{
+   public int[] sorteazaQSort(int[] y){}
+
+}
+
+class MergeSort
+{
+   public int[] sorteazaMergeSort(int[] y){}
+
+}
+
+
+Principiul open close spune ca o clasa trebuie sa fie deschisa la extensii dar inchisa la modificari. Eu am mai adaugat o metoda de sortare MergeSort si a trebuit sa fac modificari si in Secventa, si cu fiecare nou mod de sortare adaugat(extensie) trebuie sa fac modificari suplimentare. Prin faptul ca prin adaugarea unei extensii trebuie sa fac modificari suplimentare in clasa ce se foloseste de aceasta nou metoda, am incalcat prinicpiul open-close.
+
+2.
+
+Varianta corecta
+
+class Secventa
+{
+  private int[]all;
+  private Sortari sorter;
+  public Secventa(int[] nr,Sortari s){all=nr; sorter=s;}
+  public int getSortedNumbers()
+  {
+      sorter.sortare(all);
+      return all;
+
+  }
+
+}
+
+abstract class Sortari //Sau cu interface in loc de abstract class
+{
+   abstract public int[] sortare(int[] y);
+
+}
+class BubbleSort extends Sortari
+{
+  public int[] sortare(int[] y){//Implementare specifica}
+
+}
+
+class QSort extends Sortari
+{
+  public int[] sortare(int[] y){//Implementare specifica}
+
+}
+
+class MergeSort extends Sortari
+{
+  public int[] sortare(int[] y){//Implementare specifica}
+
+}
+
+
+
+
+Q2.
+
+77. 
+Inainte de apel x refera spre (11,22)
+In apel y refera spre x si ii schimba starea (prin intermediul lui y) =>(77,88)
+In main x refera tot catre (77,88) care are acum alta stare => 77
+44
+Inainte de apel y refera spre (33,44)
+In apel y refera spre x caruia ii schimba starea
+In main, datorita transmiterii referitnei prin valoare, y refera tot spre ce a referit inainte de apel(schimbare de referinta in apel nu s-a pastrat) => 44
+
+
+Q3.
+
+Fals. Nu am eroare de compilare. CUm in superclasa am un constructor no-arg , compilatorul introduce singur apel catre acesta in constructorul subclasei (Y)
+Da. Pentru ca incerc sa accesez un camp instanta al obiectului curent intr-o metoda statica. Metodele statice au fost gandite sa fie apelate via numele clasei , nu pe un obiect, nefiind necesara crearea unui obiect. Nu mi se garanteaza ca am creat un obiect si ca daca am creat apelez pe el metda statica (ceea ce ar fi contra ideii de intrebuintare a metodei statice).=>Eroare de compilare
+
+
+Q4.
+
+
+Nu. E 9. k=10, intru in try k=9 apelex exec(9) care genereaza exceptia, parasesc blocul try, prinde exceptia => Print SpecialCase=> 9
+Da. Pentru ca metoda mea zice ca emite oricefel de Exception. Si compilatorul la asta se uita. Daca metoda zice ca emite orice fel de Exception, trebuie sa prind oricefel de Excption. Obligatoriu trebuie sa am un ultim catch cu Exception
+
+
+Poza 21.
+
+Q5.
+
+1. 
+Inainte de apX e static, x=0, apoi x=new Pair() =>x=1, x.set(3,4)=>x=3, y=new Pair() =>x=1
+In apel b.set(5,6)=>x=5, b= new Pair() => x=1
+6
+Inainte de apel:y refera spre (x,2) 
+In apel: y schimba starea =>(x,6), schimba si obiectul spre care refera dar datorita trasnmiterii referitei prin valoare, nu se pastreaza madificare si si la iesirea din apel y refera tot spre (x,6)=>6
+
+
+Q6.
+
+2. Am try in for! x=0. Prima iteratie a primului for , intra in al doilea for x=1 ,apelezefec, genereaza exceptie, parasesc blocul try , prind exceptia, dar pentru ca mai am un for (ala cu i ) iar intru in blocul try(a doua iteratie a forului cu i si ultima), iar in al doilea for(cu k) x=2, apelez efec(0)=> se genereaza exceptie=> ies din try, o prind => o afisez 2 
+Da. Cum Exception e o clasa pt exceptii verificate si la metoda efect, nu am declarat ca se arunca exceptia (throws ) si nici nu am prins-o , cum la exceptii verificate compilatorul verifica daca am facut cele spuse mai sus,(si nu le -am facut) imi da eroare de compilare
+
+
+Poza 22.
+
+Q 5.
+Da. Pentru ca in cazul metodelor suprascrise, cand vine vorba de aruncatul exceptiilor verificate, cand suprascriu metoda in sublcasa, nu pot fi mai restrictiv in ceea ce priveste aruncarea exceptiilor verificate decat metoda din superlclasa. In sublcasa pot emite fie aceeasi exceptie verificat , sie un subtip de-al exceptiei verificate. Aici Ex1 si Ex2 nu au relatie subtip subpertip. Sunt doua Exceptii verificate oarecare. Problema este ca in sublcasa nu prind Ex1 + sunt mai restrictiv decat metoda din superlcasa prin faptul ca zis ca se genereaza Ex 2
+False. A este memebru instanta al clasei X pe care Y o mesteneste (adica si pe x) nu are de a face nimic cu faptul ca e private sau nu. Am instantiat clasa Y , toti membrii  instanta(si alora mosteniti) ,li s-a alocat memorie + initializare (0 in cazul meu)
+
+Q6.
+
+Da. Pentru ca a este o referinta spre o lista ce poate tine oricefel de A, iar b este o referitna spre o lista ce poate tine oricefel de b. Daca s-ar putea , prin intermediul lui a as putea adauda la lista b un e de tipul E (subtip de a lui A) si cum lista poate tine doar B -uri, s-ar ajunge la eroare de executie.
+Nu. E eroare de compilare daca incerc sa scriu imediat dupa x.length pentru ca este o variabila locala care inca nu a fost initializata. Inca nu s-a alocat memorie pentru campul length. Asta pot face doar dupa ce am zis 
+
+
+Poza 23.
+
+Q 2.
+
+56
+t=0, Inainte de apel: a refera spre (12,92) dupa schimbarea starii
+In apel a schimba starea obiectului (56,0) 
+In main se conserva starea => 56
+33.
+t=0 , a. Set => t= 92,.... b.set=> t=44, 
+In apel : a.set => t=0, b.set=> t=33
+Variabila statica camp comun pt toate variabilele=> 33

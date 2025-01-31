@@ -1,0 +1,216 @@
+﻿CURSURI POO
+
+
+1.
+
+&& si || se executa cu scurtcircuitate, prima data operandul stang
+exemple:
+	- a && b dacă a este false sigur toată expresisa e false (nu se mai evaluează restul)
+	- a || b dacă a este true sigur toată expresia e true (nu se mai evaluează restul)
+
+	
+2.
+
+operatorul new face obiecte noi in heap - sunt apoi sterse automat *candva*
+
+modificatorul static
+	- metodele statice NU se execută pe un obiect al clasei
+	- this nu are sens în metodele statice nu poți accesa membrii instanță via this (implicit ori explicit) utilizare NumeClasă.numeMetodă(params)    ex. Clock.getCount()
+	
+modificatorul final
+	- O astfel de variabilă poate ﬁ atribuită o singură dată (altfel e eroare de compilare)
+	- Un câmp instanță ﬁnal trebuie să ﬁe sigur inițializat până la sfârșitul oricărui constructor (altfel eroare de compilare)
+	
+Identitatea obiectului
+	- este acea proprietate a unui obiect care îl distinge de oricare alt obiect
+	- referința / adresa de memorie unde e alocat
+	- NU confundați numele de variabile referință cu identitatea unui obiect !
+	
+Starea obiectului
+	- reprezintă toate proprietățile obiectului plus valorile curente pentru ﬁecare din aceste proprietăți
+	
+Comportamentul obiectului
+	- reprezintă cum anume acționează/ reacționează acel obiect în termeni de schimbare a stării sale și de interacțiune cu alte obiecte
+	
+Interfața
+	- reprezintă setul de (declarații de) operații (de obicei publice) pe care un client le poate efectua pe un obiect
+	
+Încapsularea
+	- compartimentarea elementelor unui obiect care formează structura și comportamentul său; încapsularea servește la separarea interfeței de implementarea abstracțiunii
+	-  împachetarea datelor și a metodelor [ce lucrează cu acele date] în clase în combinație cu ascunderea implementării
+	
+Transmiterea parametrilor in Java: prin VALOARE
+	- Și referințele se transmit prin valoare (a nu se confunda aliasing-ul cu transmiterea prin referință care nu există în Java!)
+
+
+	
+3.
+
+Două feluri de “egalitate”
+	- Fizică sau de identitate
+		- folosim == (!= la inegalitate)
+	- Egale din punctul de vedere al stării
+		- deﬁnim o metodă pentru acest lucru și nu orice metodă !!! În Java această egalitate se va implementa în metoda equals
+	
+equals trebuie să ﬁe
+	- reﬂexiv
+		x.equals(x) e true
+	- simetric
+		x.equals(y) e true și y.equals(x) e true
+	- tranzitiv 
+		x.equals(y) e true și y.equals(z) e true atunci x.equals(z) e true
+	- x.equals(y) întoarce aceeași valoare la apeluri repetate (fără schimbarea stări obiectelor) - x.equals(null) e false
+	
+protected void ﬁnalize()
+	- Apelată (o singură dată) de colectorul de deșeuri când acesta determină că obiectul nu mai poate ﬁ referit din program -> pentru a realiza eliberare de resurse
+	
+4.
+
+Mostenirea - Semantica - două “arome”
+	a. Moștenire de clasă / de implementare
+	b. Moștenire de tip / de interfață
+
+Dacă în superclasă există un constructor no-arg (default sau nu) compilatorul introduce automat un apel la acel constructor ca primă instrucțiune
+
+Dacă avem numai constructori cu argumenete în clasa de bază, în constructorul subclaselor trebuie apelat explicit un constructor din superclasă și dacă singurul rol al constructorului din subclasă e acest apel :)
+
+daca adaugi 'final' in "titlul" metodei, aceasta nu mai poate fi overriden
+daca adaugi 'final' in "titlul" clasei, aceasta nu mai poate fi extinsa
+
+Metodele instanta pot fi DOAR redefinite.
+Cele statice doar ascunse (NU pot ﬁ redeﬁnite și implicit mecanismele bazate pe overriding NU merg la metodele statice)
+
+
+compunere vs mostenire
+	- Compunerea este o relație has-a
+		o mașină are un motor
+		o stivă are un vector în care își ține elementele
+	dă naștere unei ierarhii de obiecte
+	- Moștenirea este o relație is-a
+		un EnhancedClock este un fel de Clock
+		un Triunghi este un fel de FigurăGeometrică
+		o Pisică este un fel de Felină
+	dă naștere unei ierarhii de clase
+	
+Notiunea de tip
+	Un tip de date (abstract)  deﬁnește o mulțime de valori / ”obiecte” (abstracte) complet caracterizate de operațiile disponibile peste ele
+	
+Prima euristica a POO
+	Nu folosiți moștenirea doar pentru a reutiliza codul unei superclase (Nu folosiți moștenirea exclusiv ca moștenire de clasă; folosiți-o numai când e folosită și ca moștenire de tip)
+	
+Metoda instanta abstracta:
+	- NU are corp de instrucțiuni
+	- rămâne ca o subclasă să-i dea o implementare prin overriding
+	- clasa în care apare trebuie declarată abstractă
+	
+Notă - dacă într-o clasă nu dăm implementare pt. o metodă abstractă dintr-o superclasă, clasa trebuie declarată abstractă (altfel eroare de compilare)
+
+Metoda abstractă
+	- doar declarația metodei, speciﬁcând o operație a unui tip
+	- sunt implementate prin overriding în subclase
+Clasa abstractă
+	- NU poate ﬁ instanțiată
+	- pt. a) speciﬁcarea tipului + b) reutilizarea de cod comun
+		- abstractă pură (doar metode abstracte) - a
+		- câmpuri comune/implementări comune de metode - a,b
+		- putem avea și metode abstracte (pe lângă concrete) - a,b 
+	- NU forțați “implementări comune” inexistente; lasați metoda abstrată dacă nu există ceva comun de pus în ea
+
+Dacă o superclasă are rolul de a speciﬁca tipul / codul comun faceți-o abstractă și dacă are numai metode concrete (obiectele ei oricum nu au sens în problema de rezolvat)
+
+Polimorﬁsm 
+	- O variabilă referință declarată de un anumit tip (clasă) poate să refere obiecte a acelui
+	tip (clase) și a oricărui alt subtip (subclase) de-al său
+	
+Legarea dinamică
+	- În cazul metodelor instanță, putând ﬁ overridden/redef., se stabilește numai la rularea programului (deci dinamic) care implementare se apelează funcție de felul concret al obiectului referit la acel moment de referința din apel
+	- NU se aplică atunci când e vorba de hiding
+		- deci niciodată la apeluri de metode statice
+		- deci niciodată la accesarea de câmpuri
+		
+Principiul Open-Closed
+	- Entitățile software (ex. clase, methode) să ﬁe deschise la extensii dar închise la modiﬁcări
+		deschise la extensii
+			să putem extinde (refolosi) funcționalitatea lor
+		închise la modiﬁcări
+			să le putem extinde dar fără să le modiﬁcăm codul
+			
+5.
+
+Interceptarea exceptiilor
+	Observație: Este eroare de compilate dacă:
+		i) pe o ramură catch se prinde o excepție care a fost deja prinsă (inclusiv printr-un supertip) de un catch anterior
+		ii) pe o ramură catch se prinde o excepție subtip de-a lui Exception și care nu poate apare în secțiunea try (evident nepropagată mai departe)
+		
+Excepțiile neveriﬁcate (unchecked)
+	- Subclase de-a lui Error sau RuntimeException
+	- Se emit tot cu throw
+	- Se prind tot cu try-catch-ﬁnally
+	- Se comportă/propagă la execuție la fel
+	... dar compilatorul NU face veriﬁcări pentru ele
+		ex. dacă s-a tratat sau nu într-o metodă, dacă s-a pus clauza throws, etc
+		
+La overriding
+	Când o metodă X suprascrie/overrides o metodă Y dintr-o clasă de bază, throws-ul metodei X poate conține doar excepții checked specificate în clauza throws de la Y (sau subtipuri de-a lor)
+	
+"declarare" exceptie
+	class MyException extends Exception {
+		public MyException(String s) {
+			super(s);
+		}
+	}
+
+aruncare exceptie
+	throw new MyException() sau throw new MyException("mesaj");
+	
+aruncare exceptie mai departe
+	class MyClass throws MyException {...}
+	
+prindere exceptie
+	try {
+		...
+	} catch (MyException e) {
+		...
+	} finally {
+		...
+	}
+	
+6.
+
+import java.util.*;
+
+private
+	respectivul membru al clasei (câmp/metodă) poate ﬁ accesat doar în interiorul clasei
+public
+	respectivul membru al clasei (câmp/metodă) poate ﬁ accesat de oriunde
+protected
+	respectivul membru al clasei (câmp/metodă) poate ﬁ accesat din interiorul clasei, din subclasele sale (pe this) sau din același pachet (pe orice obiect)
+default (fără nimic - NU există cuvânt cheie) package access
+	respectivul membru al clasei (câmp/metodă) poate ﬁ accesat doar din interiorul aceluiași pachet (de oriunde din interiorul pachetului)
+
+Vizibilitatea în UML
+	-  private
+	+ public
+	# protected
+	~ access de tip package
+
+7.
+
+
+8.
+
+prima linie din cod
+	package numePachet;
+a doua linie din cod
+	import numePachet.numeClasa; (1)
+	import numePachet.*; (2)
+		Varianta 1 - putem referi prin nume scurt doar clasa menționată
+		Varianta 2 - putem referi prin nume toate clasele din pachetul menționat
+
+Ca dovadă și fără legătură cu pachetele, există (din java 1.5)
+		import static numePachet.NumeClasa.*; sau
+		import static numePachet.NumeClasa.NumeMembruStatic;
+	având ca efect posibilitatea de a utiliza (în acel ﬁșier) membrii statici implicați fără a speciﬁca la referirea lor și clasa din care fac parte
+
+
+		
